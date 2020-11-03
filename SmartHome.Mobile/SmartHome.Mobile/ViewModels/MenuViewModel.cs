@@ -19,6 +19,8 @@ namespace SmartHome.Mobile.ViewModels
 
         public ICommand MenuItemTappedCommand => new Command(OnMenuItemTapped);
 
+        public string WelcomeText => "Hello Kim" ;
+
         public ObservableCollection<MainMenuItem> MenuItems
         {
             get => _menuItems;

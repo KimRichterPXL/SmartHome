@@ -109,6 +109,42 @@ namespace SmartHome.Mobile.Services.General
             {
                 CurrentApplication.MainPage = page;
             }
+            //else if (page is LoginView)
+            //{
+            //    CurrentApplication.MainPage = page;
+            //}
+            else if (CurrentApplication.MainPage is MainView)
+            {
+                var mainPage = CurrentApplication.MainPage as MainView;
+
+                if (mainPage.Detail is SmartHomeNavigationPage navigationPage)
+                {
+                    var currentPage = navigationPage.CurrentPage;
+
+                    if (currentPage.GetType() != page.GetType())
+                    {
+                        await navigationPage.PushAsync(page);
+                    }
+                }
+                else
+                {
+                    navigationPage = new SmartHomeNavigationPage(page);
+                    mainPage.Detail = navigationPage;
+                }
+
+                mainPage.IsPresented = false;
+            }
+            else
+            {
+                if (CurrentApplication.MainPage is SmartHomeNavigationPage navigationPage)
+                {
+                    await navigationPage.PushAsync(page);
+                }
+                else
+                {
+                    CurrentApplication.MainPage = new SmartHomeNavigationPage(page);
+                }
+            }
 
             await (page.BindingContext as ViewModelBase).InitializeAsync(parameter);
         }
