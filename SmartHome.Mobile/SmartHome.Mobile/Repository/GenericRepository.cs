@@ -23,20 +23,25 @@ namespace SmartHome.Mobile.Repository
             try
             {
                 HttpClient httpClient = CreateHttpClient(uri);
-                string jsonResult = string.Empty;
 
-                var responseMessage = await Policy
-                    .Handle<WebException>(ex =>
-                    {
-                        Debug.WriteLine($"{ex.GetType().Name + " : " + ex.Message}");
-                        return true;
-                    })
-                    .WaitAndRetryAsync
-                    (
-                        5,
-                        retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
-                    )
-                    .ExecuteAsync(async () => await httpClient.GetAsync(uri));
+                //var responseMessage = await Policy
+                //    .Handle<WebException>(ex =>
+                //    {
+                //        Debug.WriteLine($"HIER IS DE FOUTMELDING {ex.GetType().Name + " : " + ex.Message}");
+                //        return true;
+                //    })
+                //    .WaitAndRetryAsync
+                //    (
+                //        5,
+                //        retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
+                //    )
+                //    .ExecuteAsync(async () => await httpClient.GetAsync(uri));
+                
+                Debug.WriteLine($"HIER IS DE FOUTMELDING 3333");
+
+                var responseMessage = await httpClient.GetAsync(uri);
+                Debug.WriteLine($"HIER IS DE FOUTMELDING {responseMessage}");
+                string jsonResult = string.Empty;
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
@@ -66,10 +71,10 @@ namespace SmartHome.Mobile.Repository
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            if (!string.IsNullOrEmpty(authToken))
-            {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
-            }
+            //if (!string.IsNullOrEmpty(authToken))
+            //{
+            //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+            //}
             return httpClient;
         }
     }

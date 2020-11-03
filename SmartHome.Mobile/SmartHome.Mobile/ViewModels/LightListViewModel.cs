@@ -23,7 +23,7 @@ namespace SmartHome.Mobile.ViewModels
 
         public ICommand LightTappedCommand => new Command<Light>(OnLightTapped);
 
-        public ObservableCollection<Light> Pies
+        public ObservableCollection<Light> Lights
         {
             get => _lights;
             set
@@ -42,7 +42,7 @@ namespace SmartHome.Mobile.ViewModels
         {
             IsBusy = true;
 
-            Pies = (await _lightDataService.GetAllLightsAsync()).ToObservableCollection();
+            Lights = (await _lightDataService.GetAllLightsAsync()).ToObservableCollection();
 
             IsBusy = false;
         }
