@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:template="clr-namespace:SmartHome.Mobile.Views.Template;assembly=SmartHome.Mobile"
+             xmlns:behaviors="clr-namespace:SmartHome.Mobile.Behaviors;assembly=SmartHome.Mobile"
              x:Class="SmartHome.Mobile.Views.MenuView"
              Title="Menu">
     <Grid RowSpacing="0">
@@ -16,13 +17,11 @@
             <!--<Label Text="{Binding WelcomeText}" Style="{StaticResource MenuLabelStyle}"/>-->
         </Grid>
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding MenuItems}"  
-                      CachingStrategy="RecycleElement"
-                      SeparatorVisibility="None" 
-                      HasUnevenRows="True" >
-                <!--<ListView.Behaviors>
+            <ListView ItemsSource="{Binding MenuItems}"  CachingStrategy="RecycleElement"
+                      SeparatorVisibility="None" HasUnevenRows="True" >
+                <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding MenuItemTappedCommand}"></behaviors:EventToCommandBehavior>
-                </ListView.Behaviors>-->
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
