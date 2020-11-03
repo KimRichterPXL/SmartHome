@@ -1,4 +1,5 @@
 ﻿using SmartHome.Mobile.Models;
+using SmartHome.Mobile.Services.General;
 using System.Collections.Generic;
 
 namespace SmartHome.Mobile.ViewModels
@@ -7,10 +8,11 @@ namespace SmartHome.Mobile.ViewModels
     {
         public List<Light> lights { get; set; }
 
-        public LightListViewModel()
+        public LightListViewModel(INavigationService navigationService) : base(navigationService)
         {
-
         }
+
+
 
 
         private void OnLightSelected(Light light)

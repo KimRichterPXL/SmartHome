@@ -31,7 +31,10 @@ namespace SmartHome.Mobile.Utilities
 
             //ViewModels
             builder.RegisterType<MainViewModel>();
+            builder.RegisterType<MenuViewModel>();
             builder.RegisterType<LightListViewModel>();
+            builder.RegisterType<LightDetailViewModel>();
+
 
             //services - data
             builder.RegisterType<LightDataService>().As<ILightDataService>();

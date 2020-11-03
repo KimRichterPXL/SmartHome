@@ -1,14 +1,37 @@
 ﻿
+using SmartHome.Mobile.Services.General;
+using System.Threading.Tasks;
+
 namespace SmartHome.Mobile.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public LightListViewModel LightListView { get; set; }
-        public MainViewModel()
+        private MenuViewModel _menuViewModel;
+
+        public MainViewModel(
+            INavigationService navigationService,
+            MenuViewModel menuViewModel):base(navigationService)
         {
-            LightListView= new LightListViewModel();
+            _menuViewModel = menuViewModel;
         }
 
-      
+        public MenuViewModel MenuViewModel
+        {
+            get => _menuViewModel;
+            set
+            {
+                _menuViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public override async Task InitializeAsync(object data)
+        {
+            await Task.WhenAll
+            (
+                _menuViewModel.InitializeAsync(data),
+                _navigationService.NavigateToAsync<LightDetailViewModel>()
+            );
+        }
     }
 }

@@ -1,12 +1,27 @@
-﻿using System.ComponentModel;
+﻿using SmartHome.Mobile.Annotations;
+using SmartHome.Mobile.Services.General;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using SmartHome.Mobile.Annotations;
 
 namespace SmartHome.Mobile.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
+        //protected readonly IConnectionService _connectionService;
+        protected readonly INavigationService _navigationService;
+        //protected readonly IDialogService _dialogService;
+
+        public ViewModelBase(
+            //IConnectionService connectionService, 
+            INavigationService navigationService
+            //IDialogService dialogService
+            )
+        {
+            //_connectionService = connectionService;
+            _navigationService = navigationService;
+            //_dialogService = dialogService;
+        }
 
         private bool _isBusy;
 

@@ -57,39 +57,58 @@ namespace SmartHome.Mobile.Services.General
 
         public Task NavigateToAsync(Type viewModelType)
         {
-            throw new NotImplementedException();
+            return InternalNavigateToAsync(viewModelType, null);
         }
 
-        public Task ClearBackStack()
+        public async Task ClearBackStack()
         {
-            throw new NotImplementedException();
+            await CurrentApplication.MainPage.Navigation.PopToRootAsync();
         }
 
         public Task NavigateToAsync(Type viewModelType, object parameter)
         {
-            throw new NotImplementedException();
+            return InternalNavigateToAsync(viewModelType, parameter);
         }
 
-        public Task NavigateBackAsync()
+        public async Task NavigateBackAsync()
         {
-            throw new NotImplementedException();
+            if (CurrentApplication.MainPage is MainView mainPage)
+            {
+                await mainPage.Detail.Navigation.PopAsync();
+            }
+            else if (CurrentApplication.MainPage != null)
+            {
+                await CurrentApplication.MainPage.Navigation.PopAsync();
+            }
         }
 
         public Task RemoveLastFromBackStackAsync()
         {
-            throw new NotImplementedException();
+            if (CurrentApplication.MainPage is MainView mainPage)
+            {
+                mainPage.Detail.Navigation.RemovePage(
+                    mainPage.Detail.Navigation.NavigationStack[mainPage.Detail.Navigation.NavigationStack.Count - 2]);
+            }
+
+            return Task.FromResult(true);
         }
 
-        public Task PopToRootAsync()
+        public async Task PopToRootAsync()
         {
-            throw new NotImplementedException();
+            if (CurrentApplication.MainPage is MainView mainPage)
+            {
+                await mainPage.Detail.Navigation.PopToRootAsync();
+            }
         }
 
         protected virtual async Task InternalNavigateToAsync(Type viewModelType, object parameter)
         {
             Page page = CreateAndBindPage(viewModelType, parameter);
-          
-            CurrentApplication.MainPage = page;
+
+            if (page is MainView )
+            {
+                CurrentApplication.MainPage = page;
+            }
 
             await (page.BindingContext as ViewModelBase).InitializeAsync(parameter);
         }
